@@ -3,21 +3,14 @@ import pandas as pd
 import argparse
 from Ft_array import *
 
-# def get_mean_na(x)
-
 def mean_normalization(x):
     ret = (x - np.mean(x)) / np.std(x)
-    # ret = (x - np.min(x)) / np.max(x) - np.min(x)
     return ret
 
 def normalize_features(x):
-    # print(x)
     for e in x:
         x[e] = mean_normalization(x[e])
     return x
-    # ret= np.apply_along_axis(mean_normalization, 0, x)
-    # print(ret)
-    return ret
 
 class MyLR():
     def __init__(self, theta, alpha=0.001, n_cycle=1000):
@@ -47,7 +40,6 @@ class MyLR():
             predict = self.hypothesis(x_prime)
             nabla = (x_prime.T @ (predict - y)) / y.shape[0]
             self.theta -= self.alpha * nabla
-            print(self.cost_(predict, y))
 
 def model_training(x, y, house_name):
     print("training : {}".format(house_name))
@@ -71,26 +63,23 @@ def train(path):
     x = normalize_features(x)
     all_classes = [model_training(x, y, house) for house in houses_name]
 
-    for elem in all_classes:
-        print(elem.theta)
+    # for elem in all_classes:
+    #     print(elem.theta)
     data_test = pd.read_csv("dataset_test.csv")
     # x_test = data_test.drop(columns = ignore).dropna()
-    x_test = data_test[accept]
+    # x_test = data_test[accept]
+    x_test = x
     predict = [lr.predict_(normalize_features(x_test)) for lr in all_classes]
 
-    print(predict)
-    # con = np.concatenate(predict)
-    # print(np.concatenate(predict, axis=1))
-    # print(con)
-    y_predict = np.argmax(np.concatenate(predict, axis=1), axis=1)
-    print("y_predict")
-    print(y_predict)
+    predict = np.array(predict).T
+    y_predict = np.argmax(predict, axis=1)
+    house_predict = [houses_name[index] for index in y_predict]
 
     # compare = np.concatenate((y_test, y_predict), axis=1)
     # compare = pd.dataframe(compare.astype("int64"))
     # print(pd.dataframe(compare.astype("int64")))
 
-    unique, counts = np.unique(y_predict == y, return_counts=true)
+    unique, counts = np.unique(house_predict == y, return_counts=True)
     print(dict(zip(unique, counts)))
 
 def main():
