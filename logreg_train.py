@@ -4,15 +4,6 @@ import argparse
 from Ft_array import *
 from logistic_regression import MyLR
 
-def mean_normalization(x):
-    ret = (x - np.mean(x)) / np.std(x)
-    return ret
-
-def normalize_features(x):
-    for e in x:
-        x[e] = mean_normalization(x[e])
-    return x
-
 DEFAULT_SAVED_FILE = ".thetas"
 
 def model_training(x, y, house_name):

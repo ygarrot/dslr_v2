@@ -1,6 +1,6 @@
+import numpy as np
 from feature_scaling import *
 import pandas as pd
-import math
 
 def ft_mediane(array):
     array = array.tolist()
@@ -11,6 +11,8 @@ def ft_mediane(array):
     return array[lena / 2]
 
 def ft_min(array):
+    # def min()
+    # test = np.apply_along_axis(
     ret = False 
     for rows in array:
         ret = rows if ret is False or rows < ret else ret
@@ -26,36 +28,25 @@ def ft_mode(array):
     lst = list(array.astype(int))
     return(max(lst, key=lst.count))
 
-
 def ft_mean(array):
     array = array[~pd.isnull(array)]
     return sum(array) / len(array)
 
 def ft_std_mediane(array):
     lena = len(array) - 1
-    suma = 0
-    meda = ft_mediane(array)
-    for elem in array:
-        suma += (elem - meda)**2
-    std = (1 / lena) * suma
-    std = math.sqrt(std)
-    return std
+    mediane = ft_mediane(array)
+    return np.sqrt(((array - mediane)**2).sum() / lena)
 
 def ft_std(array):
     lena = len(array) - 1
-    suma = 0
     mean = ft_mean(array)
-    for elem in array:
-        suma += (elem - mean)**2
-    std = (1 / lena) * suma
-    std = math.sqrt(std)
-    return std
+    return np.sqrt(((array - mean)**2).sum() / lena)
 
 def ft_count(array):
     return len(array)
 
 def ft_percentile(array, percent):
-   array.sort() 
+   array.sort()
    n = len(array) * percent / 100
    return array[int(n)]
 
