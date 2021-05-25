@@ -1,15 +1,20 @@
-def mean_normalization(x, mean=False, std=False):
-    mean = mean if mean is not False else x.mean()
-    std = std if std is not False else x.std()
-    return (x - mean) / std
+# def mean_normalization(x, mean, std):
+#     return (x - mean) / std
 
-def rescaling(x, min_x=False, max_x=False):
-    min_x = min_x if min_x is not False else x.min()
-    max_x = max_x if max_x is not False else x.max()
+def rescaling(x, min_x, max_x):
     return ((x - min_x) / (max_x - min_x))
 
-def reverse_rescaling(x, min_x=False, max_x=False):
-    min_x = min_x if min_x is not False else x.min()
-    max_x = max_x if max_x is not False else x.max()
+def reverse_rescaling(x, min_x, max_x):
     return (x * (max_x - min_x) - min_x)
+
+def mean_normalization(x):
+    ret = (x - np.mean(x)) / np.std(x)
+    return ret
+
+
+def normalize_features(x):
+    for e in x:
+        x[e] = mean_normalization(x[e])
+    return x
+
 

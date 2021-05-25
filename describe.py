@@ -9,33 +9,22 @@ def describe(file, get_head=False):
     if (get_head is True):
         only_int = only_int.head()
 
-    count = only_int.apply(ft_count)
-    std = only_int.apply(ft_std)
-    std_med = only_int.apply(ft_std_mediane)
-    mean = only_int.apply(ft_mean)
-    median = only_int.apply(ft_median)
-    first_quar = only_int.apply(ft_first_quar)
-    third_quar = only_int.apply(ft_third_quar)
-    median = only_int.apply(ft_median)
-    min_c = only_int.apply(ft_min)
-    max_c = only_int.apply(ft_max)
-    mediane = only_int.apply(ft_mediane)
-    mode = only_int.apply(ft_mode)
+    functions = {
+            "Count": ft_count,
+            "Mean": ft_mean,
+            "Std": ft_std,
+            "Std med": ft_std_mediane,
+            "Min": ft_min,
+            "25%": ft_first_quar,
+            "50%": ft_mean,
+            "75%": ft_third_quar,
+            "Max": ft_max,
+            "med": ft_median,
+            "mode": ft_mode
+    }
 
-    name = ["Count",
-            "Mean",
-            "Std",
-            "Std med",
-            "Min",
-            "25%",
-            "50%",
-            "75%",
-            "Max",
-            "med",
-            "mode"]
-
-    # print(only_int.describe().to_string())
-    print(pd.DataFrame([count, mean, std, std_med, min_c, first_quar, median, third_quar, max_c, mediane, mode], index=name).to_string(col_space=2))
+    all_stat = [ only_int.apply(v) for (k, v) in functions.items()]
+    print(pd.DataFrame(all_stat, index=functions.keys()).to_string(col_space=2))
 
 if __name__ == '__main__':
     if (len(sys.argv) > 1):

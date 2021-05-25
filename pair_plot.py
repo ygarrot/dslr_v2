@@ -4,11 +4,6 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import sys
 
-# def slice_name(array)
-#     line =
-#     for index in array
-#         index
-
 def pair_plot(file, get_head=False):
     house_column = 'Hogwarts House'
     sns.set(style="ticks", color_codes=True)
@@ -31,3 +26,4 @@ if __name__ == '__main__':
             pair_plot(sys.argv[1], len(sys.argv) > 2 and sys.argv[2] == "-h")
         except:
             print("error")
+    print("give me a file please")
